@@ -10,7 +10,11 @@ namespace _18Ghosts
 
         string smile = "\u263A";
         string scarry = "\u263B";
-
+        
+        /// <summary>
+        /// Sets the corret shape of the ghost to the variable
+        /// </summary>
+        /// <param name="s">Recives the corretc shape </param>
         public Ghost(GhostShape s)
         {
             if (s == GhostShape.Smile)

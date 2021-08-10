@@ -4,6 +4,10 @@ namespace _18Ghosts
 {
     class Program
     {
+        /// <summary>
+        /// Greets the payers, gives them the instructions and plays the game
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
 

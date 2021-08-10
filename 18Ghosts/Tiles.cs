@@ -36,12 +36,14 @@ namespace _18Ghosts
 
             set;
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="t"></param>
         public Tiles(Types t)
         {
             type = t;
         }
-
         public Tiles(Colors c, Types t, string b)
         {
             color = c;
@@ -61,6 +63,7 @@ namespace _18Ghosts
         {
             
         }
+    
             char topLeft = (char) 0x250C;
             char topRight = (char) 0x2510;
             char botLeft = (char) 0x2514;
@@ -77,6 +80,9 @@ namespace _18Ghosts
             char portalLeft = (char) 0x25C4;
             char portalRight = (char) 0x25BA;
 
+            /// <summary>
+            /// Changes the color of the tiles on the board
+            /// </summary>
             public void WriteTile()
             {
                 if (color == Colors.Blue)
@@ -98,6 +104,9 @@ namespace _18Ghosts
                 Console.Write(bkgd);
                 Console.ResetColor();
             }
+            /// <summary>
+            /// Prints the dungeon on the board
+            /// </summary>
             public void DungeonChar()
             {
                 Console.Write(dungeon);

@@ -3,11 +3,19 @@ namespace _18Ghosts
     public class Player
     {
         string letter;
-
+        /// <summary>
+        /// Creates 3 arrays, one for each color to give 3 ghosts of each color
+        /// to the players
+        /// </summary>
         public Ghost[] Blues = new Ghost[3];
         public Ghost[] Reds = new Ghost[3];
         public Ghost[] Yellows = new Ghost[3];
 
+        /// <summary>
+        /// Creates ghosts for each color as long as their number is lower
+        /// than 3
+        /// </summary>
+        /// <param name="g">Creates the ghosts</param>
         public Player(GhostShape g)
         {
             for (int i = 0; i < 2; i++)
@@ -16,8 +24,15 @@ namespace _18Ghosts
                 Reds[i] = new Ghost(g);
                 Yellows[i] = new Ghost(g);
             }
+            
         }
 
+        /// <summary>
+        /// Sets shapes according to color
+        /// </summary>
+        /// <param name="c">Gives the color</param>
+        /// <param name="p">Gets shape</param>
+        /// <returns>The number of ghosts per color and shape</returns>
         public string GetGhost(Colors c, int p)
         {
            switch (c)
@@ -32,7 +47,12 @@ namespace _18Ghosts
             return "";
         }
         
-
+        /// <summary>
+        /// Checks if there is a free space to place a ghost according to the 
+        /// color
+        /// </summary>
+        /// <param name="c">Gets the color of the tile</param>
+        /// <returns>If the tile in question is free</returns>
         public int CheckFree(Colors c)
         {
             switch (c)

@@ -5,6 +5,9 @@ namespace _18Ghosts
 {
     public class Board
     {
+        /// <summary>
+        /// Creates arrays for the board, dungeon and players
+        /// </summary>
         Tiles[,] board = new Tiles[5, 5];
 
         Tiles[] dungeon = new Tiles[5];
@@ -12,20 +15,20 @@ namespace _18Ghosts
 
         Player[] players = new Player[2];
 
+        /// <summary>
+        /// Sets the type of ghost to each player
+        /// </summary>
         public Board()
         {
             players[0] = new Player(GhostShape.Smile);
             players[1] = new Player(GhostShape.Scarry);
         }
 
-
+        /// <summary>
+        /// Draws board with ascii characters and color
+        /// </summary>
         public void DrawBoard()
         {
-            //int t = 0;
-            //int m = 0;
-            //int d = 0;
-
-
             //Line 1
             Console.Write("|");
             board[0, 0] = new Tiles(Colors.Blue, Types.Normal, "A1", "\u250C");
@@ -138,6 +141,9 @@ namespace _18Ghosts
             dungeon[4].WriteTile();
             Console.WriteLine("|");
         }
+        /// <summary>
+        /// Executes the board 
+        /// </summary>
         public void Execute()
         {
             Console.Write("|");
@@ -215,6 +221,9 @@ namespace _18Ghosts
             dungeon[4].WriteTile();
             Console.WriteLine("|");
         }
+        /// <summary>
+        /// PLaces the Ghosts on the board randomly
+        /// </summary>
         public void PlaceGhost()
         {
             for (int l = 0; l < 5; l++)
