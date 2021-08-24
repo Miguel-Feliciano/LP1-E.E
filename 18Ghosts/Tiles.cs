@@ -11,13 +11,17 @@ namespace _18Ghosts
 
         string bkgd;
 
-        public Colors Color     // altera a propriedade de acordo com a declaração
+        string defaultBkgd;
+
+        int owner; // player number in use
+
+        public Colors Color   // altera a propriedade de acordo com a declaração
         {
             get;
 
             set;
         }
-        public Types Type      // altera a propriedade de acordo com a declaração
+        public Types Type    // altera a propriedade de acordo com a declaração
         {
             get;
 
@@ -36,32 +40,44 @@ namespace _18Ghosts
 
             set;
         }
+        public int Owner
+        {
+            get;
+
+            set;
+        }
+        public string DefaultBkgd
+        {
+            get;
+
+            set;
+        }
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="t"></param>
         public Tiles(Types t)
         {
-            type = t;
+            Type = t;
+            Owner = -1;
         }
         public Tiles(Colors c, Types t, string b)
         {
-            color = c;
-            type = t;
-            bkgd = b;
-
+            Color = c;
+            Type = t;
+            Bkgd = b;
+            DefaultBkgd = b;
+            Owner = -1;
         }
          public Tiles(Colors c, Types t, string a, string b)
         {
-            color = c;
-            type = t;
-            addr = a;
-            bkgd = b;
-
-        }
-        public Tiles()
-        {
-            
+            Color = c;
+            Type = t;
+            Addr = a;
+            Bkgd = b;
+            DefaultBkgd = b;
+            Owner = -1;
         }
     
             char topLeft = (char) 0x250C;
@@ -75,25 +91,21 @@ namespace _18Ghosts
             char up = (char) 0x2534;
             char down = (char) 0x252C;
             char dungeon = (char) 0x2591;
-            char portalUp = (char) 0x25B2;
-            char portalDown = (char) 0x25BC;
-            char portalLeft = (char) 0x25C4;
-            char portalRight = (char) 0x25BA;
 
             /// <summary>
             /// Changes the color of the tiles on the board
             /// </summary>
             public void WriteTile()
             {
-                if (color == Colors.Blue)
+                if (Color == Colors.Blue)
                 {
                     Console.ForegroundColor = ConsoleColor.Blue;
                 }
-                else if (color == Colors.Red)
+                else if (Color == Colors.Red)
                 {
                     Console.ForegroundColor = ConsoleColor.Red;
                 }
-                else if (color == Colors.Yellow)
+                else if (Color == Colors.Yellow)
                 {
                    Console.ForegroundColor = ConsoleColor.Yellow; 
                 }
@@ -101,7 +113,7 @@ namespace _18Ghosts
                 {
                     Console.ForegroundColor = ConsoleColor.White; 
                 }
-                Console.Write(bkgd);
+                Console.Write(Bkgd);
                 Console.ResetColor();
             }
             /// <summary>

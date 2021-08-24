@@ -1,8 +1,11 @@
+using System;
+
 namespace _18Ghosts
 {
     public class Player
     {
-        string letter;
+        int playerNum;
+
         /// <summary>
         /// Creates 3 arrays, one for each color to give 3 ghosts of each color
         /// to the players
@@ -11,20 +14,32 @@ namespace _18Ghosts
         public Ghost[] Reds = new Ghost[3];
         public Ghost[] Yellows = new Ghost[3];
 
+        public int PlayerNum
+        {
+            get;
+
+            set;
+        }
+
+        public Player()
+        {
+            
+        }
         /// <summary>
         /// Creates ghosts for each color as long as their number is lower
         /// than 3
         /// </summary>
         /// <param name="g">Creates the ghosts</param>
-        public Player(GhostShape g)
+        public Player(GhostShape g, int pn)
         {
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 3; i++)
             {
                 Blues[i] = new Ghost(g);
                 Reds[i] = new Ghost(g);
                 Yellows[i] = new Ghost(g);
             }
-            
+
+            PlayerNum = pn;
         }
 
         /// <summary>
@@ -35,18 +50,19 @@ namespace _18Ghosts
         /// <returns>The number of ghosts per color and shape</returns>
         public string GetGhost(Colors c, int p)
         {
-           switch (c)
-           {
-               case Colors.Blue:
-               return Blues[p].Shape;
-               case Colors.Red:
-               return Reds[p].Shape;
-               case Colors.Yellow:
-               return Yellows[p].Shape;
-           } 
+            switch (c)
+            {
+                case Colors.Blue:
+                    return Blues[p].Shape;
+                case Colors.Red:
+                    return Reds[p].Shape;
+                case Colors.Yellow:
+                    return Yellows[p].Shape;
+            }
+            Console.WriteLine("Vazio________");
             return "";
         }
-        
+
         /// <summary>
         /// Checks if there is a free space to place a ghost according to the 
         /// color
@@ -58,32 +74,32 @@ namespace _18Ghosts
             switch (c)
             {
                 case Colors.Blue:
-                for (int i = 0; i < 3; i++)
-                {
-                    if (Blues[i].InOut == 0)
+                    for (int i = 0; i < 3; i++)
                     {
-                        return i;
+                        if (Blues[i].InOut == 0)
+                        {
+                            return i;
+                        }
                     }
-                }
-                break;
+                    break;
                 case Colors.Red:
-                for (int i = 0; i < 3; i++)
-                {
-                    if (Reds[i].InOut == 0)
+                    for (int i = 0; i < 3; i++)
                     {
-                        return i;
+                        if (Reds[i].InOut == 0)
+                        {
+                            return i;
+                        }
                     }
-                }
-                break;
+                    break;
                 case Colors.Yellow:
-                for (int i = 0; i < 3; i++)
-                {
-                    if (Yellows[i].InOut == 0)
+                    for (int i = 0; i < 3; i++)
                     {
-                        return i;
+                        if (Yellows[i].InOut == 0)
+                        {
+                            return i;
+                        }
                     }
-                }
-                break;
+                    break;
             }
             return -1;
         }

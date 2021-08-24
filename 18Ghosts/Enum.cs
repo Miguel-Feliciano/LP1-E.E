@@ -19,7 +19,7 @@ public enum Types
 
 }
 public enum GhostShape
-        {
-            Smile,
-            Scarry
-        }
+{
+    Smile,
+    Scarry
+}

@@ -12,6 +12,7 @@ namespace _18Ghosts
         {
 
             Board b = new Board();
+            Player p = new Player();
 
             Console.WriteLine("Welcome to 18 Ghosts!");
             Console.WriteLine("These are the rules:");
@@ -29,6 +30,19 @@ namespace _18Ghosts
             b.DrawBoard();
             b.PlaceGhost();
             b.Execute();
+            b.Play();
         }
+        
+
+        public void Winner(Player player)
+        {
+            Console.WriteLine( player + " WINS!");      
+        }
+
+        public void Bye()
+        {
+            Console.WriteLine("Thank You for playing 18 Ghosts! Bye!");
+        }
+        
     }
 }
