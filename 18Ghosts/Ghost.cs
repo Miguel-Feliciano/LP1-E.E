@@ -26,7 +26,7 @@ namespace _18Ghosts
                 Shape = scarry;
             }
         }
-
+    
         public string Color
         {
             get;

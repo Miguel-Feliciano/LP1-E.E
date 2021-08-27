@@ -29,16 +29,19 @@ namespace _18Ghosts
 
             b.DrawBoard();
             b.PlaceGhost();
-            b.Execute();
+           // b.Execute();
             b.Play();
         }
         
-
+        
         public void Winner(Player player)
         {
             Console.WriteLine( player + " WINS!");      
         }
 
+        /// <summary>
+        /// Gives the players a farewell message
+        /// </summary>
         public void Bye()
         {
             Console.WriteLine("Thank You for playing 18 Ghosts! Bye!");

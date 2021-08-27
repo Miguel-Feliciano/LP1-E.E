@@ -21,9 +21,19 @@ namespace _18Ghosts
             set;
         }
 
+        public int GhostsOut 
+        { 
+            get;  
+            
+            set; 
+        }
+
+        /// <summary>
+        /// Sets the variable of ghosts that exited to 0
+        /// </summary>
         public Player()
         {
-            
+            GhostsOut = 0;
         }
         /// <summary>
         /// Creates ghosts for each color as long as their number is lower
@@ -32,6 +42,7 @@ namespace _18Ghosts
         /// <param name="g">Creates the ghosts</param>
         public Player(GhostShape g, int pn)
         {
+            GhostsOut = 0;
             for (int i = 0; i < 3; i++)
             {
                 Blues[i] = new Ghost(g);
