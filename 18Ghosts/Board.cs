@@ -249,16 +249,36 @@ namespace _18Ghosts
             {
                 char option;
 
-                Console.WriteLine("Player " + cp + "you have ghosts" +
-                    "in the dungeon, want to remove? Y/N ");
+                Execute();
+                Console.WriteLine("Player " + cp + " you have ghosts" +
+                    " in the dungeon, want to remove? Y/N ");
+
+
                 option = Convert.ToChar(Console.ReadLine());
-                
+
                 if (option == 'y')
                 {
                     int gh = GetGhostFromDungeon(cp);
-                    
-                }
+                    if (gh > 0)
+                    {
+                        Tiles tmp = CheckFreeTile(dungeon[gh].Color);
+                        if (tmp != null)
+                        {
+                            tmp.Bkgd = dungeon[gh].Bkgd;
 
+                            dungeon[gh].Bkgd = "\u2591";
+                            dungeon[gh].Owner = -1;
+                            dungeon[gh].Color = Colors.White;
+
+                            Console.WriteLine("fomos buscar a dungeon");
+                        }
+                        else
+                        {
+                            Console.WriteLine("There is no space no the board");
+                        }
+
+                    }
+                }
             }
             do
             {
@@ -340,7 +360,7 @@ namespace _18Ghosts
             bool hasIt = false;
             for (int i = 0; i < dungeon.Length; i++)
             {
-                if (dungeon[i].Owner == cp + 1)
+                if (dungeon[i].Owner == cp)
                 {
                     hasIt = true;
                     break;
@@ -351,20 +371,21 @@ namespace _18Ghosts
 
         public int GetGhostFromDungeon(int cp)
         {
+            Console.WriteLine("jogador a jogar " + cp);
             for (int i = 0; i < dungeon.Length; i++)
             {
-                if (dungeon[i].Owner == cp + 1)
+                if (dungeon[i].Owner == cp)
                 {
-                    Console.Write("\t{0} ", i+1 ); 
+                    Console.Write("\t{0} ", i + 1);
                     dungeon[i].WriteTile();
                     break;
                 }
             }
-            Console.WriteLine("Type number to choose, or 0 to return");
-            return Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine(" | Type number to choose, or 0 to return");
+            return Convert.ToInt32(Console.ReadLine()) - 1;
         }
 
-        public Tile CheckFreeTile(Colors c)
+        public Tiles CheckFreeTile(Colors c)
         {
             for (int line = 0; line < 5; line++)
             {
@@ -374,7 +395,10 @@ namespace _18Ghosts
                     {
                         if (board[line, col].Color == c)
                         {
-                            return board[line, col];
+                            if (board[line, col].Type == Types.Normal)
+                            {
+                                return board[line, col];
+                            }
                         }
                     }
                 }

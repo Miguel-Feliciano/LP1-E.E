@@ -61,16 +61,20 @@ namespace _18Ghosts
         /// <returns>The number of ghosts per color and shape</returns>
         public string GetGhost(Colors c, int p)
         {
+            Console.WriteLine("Vazio________" + p);
             switch (c)
             {
                 case Colors.Blue:
+                    Blues[p].InOut = 1;
                     return Blues[p].Shape;
                 case Colors.Red:
+                    Reds[p].InOut = 1;
                     return Reds[p].Shape;
                 case Colors.Yellow:
+                    Yellows[p].InOut = 1;
                     return Yellows[p].Shape;
             }
-            Console.WriteLine("Vazio________");
+            
             return "";
         }
 
