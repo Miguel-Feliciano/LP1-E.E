@@ -6,6 +6,8 @@ namespace _18Ghosts
     public class Tiles
     {
         Colors color;   // utiliza a enumeração adequada
+
+        Colors dfaultColor;
         Types type;     // utiliza a enumeração adequada
         string addr;
 
@@ -16,6 +18,12 @@ namespace _18Ghosts
         int owner; // player number in use
 
         public Colors Color   // altera a propriedade de acordo com a declaração
+        {
+            get;
+
+            set;
+        }
+        public Colors DfaultColor
         {
             get;
 
@@ -65,6 +73,7 @@ namespace _18Ghosts
         public Tiles(Colors c, Types t, string b)
         {
             Color = c;
+            DfaultColor = c;
             Type = t;
             Bkgd = b;
             DefaultBkgd = b;
@@ -73,6 +82,7 @@ namespace _18Ghosts
          public Tiles(Colors c, Types t, string a, string b)
         {
             Color = c;
+            DfaultColor = c;
             Type = t;
             Addr = a;
             Bkgd = b;

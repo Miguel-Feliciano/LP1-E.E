@@ -17,6 +17,8 @@ namespace _18Ghosts
 
         Portal[] portals = new Portal[3];
 
+        Tiles[] mirrors = new Tiles[4];
+
         bool victory = false;
 
         /// <summary>
@@ -175,8 +177,7 @@ namespace _18Ghosts
 
         public void Execute()
         {
-            Console.WriteLine("Player 1 is black background," +
-             "Player 2 is full background");
+            Console.WriteLine("");
             Console.WriteLine("| |1|2|3|4|5|");
             for (int l = 0; l < 5; l++) //each line, from 0 till 5
             {
@@ -190,7 +191,7 @@ namespace _18Ghosts
                 dungeon[l].WriteTile(); // and, finally, the dungeon
                 Console.WriteLine("|");
             }
-            Console.WriteLine();
+
         }
 
         /// <summary>
@@ -228,11 +229,49 @@ namespace _18Ghosts
         public void Play()
         {
             int cp = 0; //current player
-
+            bool played;
 
             do
             {
-                getInput(players[cp].PlayerNum);
+                played = false;
+                //check if there are an ghosts on dungeon
+                Execute();
+                if (HasGhostInDungeon(cp))
+                {
+                    Console.WriteLine("Player " + players[cp].PlayerNum + " you have ghosts" +
+                        " in the dungeon, want to remove? Y/N ");
+
+                    char option = Convert.ToChar(Console.ReadLine());
+
+                    if (option == 'y')
+                    {
+                        int gh = GetGhostFromDungeon(cp);
+                        if (gh > 0)
+                        {
+                            Tiles tmp = CheckFreeTile(dungeon[gh].Color);
+                            if (tmp != null)
+                            {
+                                tmp.Bkgd = dungeon[gh].Bkgd;
+
+                                dungeon[gh].Bkgd = "\u2591";
+                                dungeon[gh].Owner = -1;
+                                dungeon[gh].Color = Colors.White;
+
+                                played = true;
+                            }
+                            else
+                            {
+                                Console.WriteLine("There is no space no the board");
+                                played = false;
+                            }
+
+                        }
+                    }
+                }
+                if (!played)
+                {
+                    getInput(players[cp].PlayerNum);
+                }
                 cp = (cp == 0) ? 1 : 0;
             } while (!victory);
         }
@@ -245,44 +284,9 @@ namespace _18Ghosts
             Console.WriteLine("Current player = " + cp);
             int n1 = -1, n2 = -1, n3 = -1, n4 = -1;
 
-            if (HasGhostInDungeon(cp))
-            {
-                char option;
-
-                Execute();
-                Console.WriteLine("Player " + cp + " you have ghosts" +
-                    " in the dungeon, want to remove? Y/N ");
-
-
-                option = Convert.ToChar(Console.ReadLine());
-
-                if (option == 'y')
-                {
-                    int gh = GetGhostFromDungeon(cp);
-                    if (gh > 0)
-                    {
-                        Tiles tmp = CheckFreeTile(dungeon[gh].Color);
-                        if (tmp != null)
-                        {
-                            tmp.Bkgd = dungeon[gh].Bkgd;
-
-                            dungeon[gh].Bkgd = "\u2591";
-                            dungeon[gh].Owner = -1;
-                            dungeon[gh].Color = Colors.White;
-
-                            Console.WriteLine("fomos buscar a dungeon");
-                        }
-                        else
-                        {
-                            Console.WriteLine("There is no space no the board");
-                        }
-
-                    }
-                }
-            }
             do
             {
-                Execute();
+
                 Console.WriteLine("What piece do you want to move?");
                 do
                 {
@@ -308,16 +312,12 @@ namespace _18Ghosts
                         Console.WriteLine("Select Colum Number");
                         n4 = Convert.ToInt32(Console.ReadLine()) - 1;
                     } while (n4 < 0 || n4 > 4);
-                    Console.WriteLine(" n3 = {0} / n4 = {1} ", n3, n4);
                 }
                 else
                 {
                     Console.WriteLine("This piece is not yours " +
                     board[n1, n2].Owner + " / " + cp);
                 }
-
-
-
             } while (!validInput(n1, n2, n3, n4));
 
 
@@ -360,7 +360,7 @@ namespace _18Ghosts
             bool hasIt = false;
             for (int i = 0; i < dungeon.Length; i++)
             {
-                if (dungeon[i].Owner == cp)
+                if (dungeon[i].Owner == players[cp].PlayerNum)
                 {
                     hasIt = true;
                     break;
@@ -371,14 +371,14 @@ namespace _18Ghosts
 
         public int GetGhostFromDungeon(int cp)
         {
-            Console.WriteLine("jogador a jogar " + cp);
+            Console.WriteLine("jogador a jogar " + players[cp].PlayerNum);
             for (int i = 0; i < dungeon.Length; i++)
             {
-                if (dungeon[i].Owner == cp)
+                if (dungeon[i].Owner == players[cp].PlayerNum)
                 {
                     Console.Write("\t{0} ", i + 1);
                     dungeon[i].WriteTile();
-                    break;
+
                 }
             }
             Console.WriteLine(" | Type number to choose, or 0 to return");
@@ -423,13 +423,29 @@ namespace _18Ghosts
             do
             {
                 Console.WriteLine("Select Line Number");
-                n3 = Convert.ToInt32(Console.ReadLine());
+                n3 = Convert.ToInt32(Console.ReadLine()) -1;
                 Console.WriteLine("Select Colum Number");
-                n4 = Convert.ToInt32(Console.ReadLine());
+                n4 = Convert.ToInt32(Console.ReadLine()) -1;
+                Console.WriteLine("tipo = {0}" , board[n3, n4].Type);
                 if (board[n3, n4].Type != Types.Mirror)
                 {
                     Console.WriteLine("That is not a Mirror, try again");
                     ok = false;
+                }
+                else if (board[n3, n4].Type == Types.Mirror)
+                {
+                    Console.WriteLine("You entered a mirror, " +
+                    " to which mirror do you want to go next?");
+
+                    int mirrorNum = GetMirror(n3, n4);
+                    Console.WriteLine("valor do espelho {0}", mirrorNum);
+                    if (mirrorNum >= 0)
+                    {
+                        board[n3, n4].Bkgd = board[n1, n2].Bkgd;
+                        board[n3, n4].Color = board[n1, n2].Color;
+                        board[n3, n4].Owner = board[n1, n2].Owner;
+                    }
+
                 }
 
             } while (!ok);
@@ -539,7 +555,6 @@ namespace _18Ghosts
                 }
             }
 
-            Console.WriteLine("Loose = {0} / winner = {1} ", loose, win);
 
             if (loose)
             {
@@ -554,12 +569,12 @@ namespace _18Ghosts
                 board[n3, n4].Color = board[n1, n2].Color;
                 board[n3, n4].Type = board[n1, n2].Type;
                 board[n3, n4].Owner = board[n1, n2].Owner;
-                Console.WriteLine(" igualamos boards ");
             }
-            board[n3, n4].WriteTile();
-            board[n1, n2].WriteTile();
+            // board[n3, n4].WriteTile();
+            // board[n1, n2].WriteTile();
             board[n1, n2].Owner = -1;
             board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
+            board[n1, n2].Color = board[n1, n2].DfaultColor;
 
         }
 
@@ -620,13 +635,24 @@ namespace _18Ghosts
                 case Colors.Yellow:
                     portals[1].Rotate();
                     board[2, 4].Bkgd = portals[1].PBkgd;
-                    Console.WriteLine("rodou amarelo " + board[2, 4].Bkgd);
                     break;
                 case Colors.Blue:
                     portals[2].Rotate();
                     board[4, 2].Bkgd = portals[2].PBkgd;
                     break;
             }
+        }
+        public int GetMirror(int line, int col)
+        {
+            if ((line == 1) && (col == 1))
+                return 0;
+            if ((line == 1) && (col == 3))
+                return 1;
+            if ((line == 3) && (col == 1))
+                return 2;
+            if ((line == 3) && (col == 3))
+                return 3;
+            return -1;
         }
     }
 }

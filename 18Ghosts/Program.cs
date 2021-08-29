@@ -27,9 +27,11 @@ namespace _18Ghosts
              "The first player to get one ghost out wins!");
             Console.WriteLine("Have Fun!");
 
+            Console.WriteLine("Player 1 is black background," +
+             "Player 2 is full background");
+
             b.DrawBoard();
             b.PlaceGhost();
-           // b.Execute();
             b.Play();
         }
         

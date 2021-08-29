@@ -60,8 +60,7 @@ namespace _18Ghosts
         /// <param name="p">Gets shape</param>
         /// <returns>The number of ghosts per color and shape</returns>
         public string GetGhost(Colors c, int p)
-        {
-            Console.WriteLine("Vazio________" + p);
+        {            
             switch (c)
             {
                 case Colors.Blue:
