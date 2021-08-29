@@ -16,18 +16,23 @@ When starting the game the class Program.cs will give the players the instructio
 
 I decided to take advantage of the "Variant for shorter play" and of being allowed to place the ghosts at random to facilitate the process since doing the placement manually would be a big task.
 
+Unfortunately one problem regarding the dungeon array was not solved.
+
 
 ### Conclusion
 To summarize, I believe this project pushed me to the limits of my knowledge, and even tho I'm not fully satisfied with the final product, I feel it shows an improvement in my knowledge of object oriented programming even tho there is much room for improvement.
 
 ## UML
 
+![](18Ghosts.png)
 
 ## References
 
 1- Class Powerpoints
 
 2- http://www.codinghomework.com C# How To Program: Almost Chess
+
+3- https://docs.microsoft.com/en-us/dotnet/api/
 
 
 
