@@ -268,6 +268,7 @@ namespace _18Ghosts
                         }
                     }
                 }
+                getInput(players[cp].PlayerNum);
                 if (!played)
                 {
                     getInput(players[cp].PlayerNum);
@@ -286,7 +287,6 @@ namespace _18Ghosts
 
             do
             {
-
                 Console.WriteLine("What piece do you want to move?");
                 do
                 {
@@ -333,6 +333,7 @@ namespace _18Ghosts
             //check if target is portal
             if (board[n3, n4].Type == Types.Portal)
             {
+                Console.WriteLine("Player {0} arrived near a portal ", cp);
                 this.GoPortal(cp, n1, n2, n3, n4);
                 return;
             }
@@ -343,6 +344,8 @@ namespace _18Ghosts
                 board[n3, n4].Color = board[n1, n2].Color;
                 board[n3, n4].Owner = board[n1, n2].Owner;
                 board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
+                board[n1, n2].Color = board[n1, n2].DefaultColor;
+
 
                 return;
             }
@@ -382,6 +385,8 @@ namespace _18Ghosts
             }
             Console.WriteLine(" | Type number to choose, or 0 to return");
             return Convert.ToInt32(Console.ReadLine()) - 1;
+
+
         }
 
         public Tiles CheckFreeTile(Colors c)
@@ -433,21 +438,24 @@ namespace _18Ghosts
                 }
                 else if (board[n3, n4].Type == Types.Mirror)
                 {
+
+
                     Console.WriteLine("You entered a mirror, " +
                     " to which mirror do you want to go next?");
 
                     int mirrorNum = GetMirror(n3, n4);
-                    Console.WriteLine("valor do espelho {0}", mirrorNum);
                     if (mirrorNum >= 0)
                     {
                         board[n3, n4].Bkgd = board[n1, n2].Bkgd;
                         board[n3, n4].Color = board[n1, n2].Color;
                         board[n3, n4].Owner = board[n1, n2].Owner;
                         board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
+                        board[n1, n2].Owner = -1;
                     }
 
-                }
 
+                }
+                Console.WriteLine(" o dono = " + board[n3, n4].Owner);
             } while (!ok);
         }
 
@@ -469,12 +477,11 @@ namespace _18Ghosts
                 {
                     if (portals[pNum].CheckEntrance(pNum, n1, n2) == true)
                     {
-                        
                         Console.WriteLine("A Ghost from player {0} " +
-                        "went through a portal!", board[n1, n2].Owner);
-                        players[curPl].GhostsOut += 1;
-                        Console.WriteLine("num de fantasmas " + players[curPl].GhostsOut );
-                        if (players[curPl].GhostsOut == 3)
+                        "went through a portal!", curPl);
+
+                        players[curPl - 1].GhostsOut += 1;
+                        if (players[curPl - 1].GhostsOut >= 3)
                         {
                             victory = true;     // call Vitory!                            
                         }
@@ -483,8 +490,8 @@ namespace _18Ghosts
             }
             board[n1, n2].Owner = -1;
             board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
-            
         }
+
 
         /// <summary>
         /// Controls the ghosts when they are sent to the dungeon
@@ -509,8 +516,8 @@ namespace _18Ghosts
                 index = length + 1;
                 Array.Resize(ref dungeon, length + 5);
                 dungeon[length] = board[n1, n2];
-                Console.WriteLine("Owner = " + dungeon[length].Owner);
             }
+
             dungeon[index].Bkgd = board[n1, n2].Bkgd;
             dungeon[index].Owner = board[n1, n2].Owner;
             dungeon[index].Type = board[n1, n2].Type;
@@ -577,9 +584,7 @@ namespace _18Ghosts
             }
             board[n1, n2].Owner = -1;
             board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
-            Console.WriteLine(" o dono é " + board[n1, n2].Owner);
-            Console.WriteLine(" o bkgd é " + board[n1, n2].Bkgd);
-            Console.WriteLine(" a cor é " + board[n1, n2].Color);
+
 
         }
 
