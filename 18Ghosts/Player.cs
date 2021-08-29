@@ -6,6 +6,8 @@ namespace _18Ghosts
     {
         int playerNum;
 
+        int ghostsOut;
+
         /// <summary>
         /// Creates 3 arrays, one for each color to give 3 ghosts of each color
         /// to the players

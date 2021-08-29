@@ -36,9 +36,9 @@ namespace _18Ghosts
         }
         
         
-        public void Winner(Player player)
+        public void Winner(Board players)
         {
-            Console.WriteLine( player + " WINS!");      
+            Console.WriteLine( " WINS!");      
         }
 
         /// <summary>

@@ -1,5 +1,5 @@
 using System;
-using System.Collections;
+
 
 namespace _18Ghosts
 {
@@ -343,7 +343,7 @@ namespace _18Ghosts
                 board[n3, n4].Color = board[n1, n2].Color;
                 board[n3, n4].Owner = board[n1, n2].Owner;
                 board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
-                board[n1, n2].Owner = -1;
+
                 return;
             }
 
@@ -371,7 +371,6 @@ namespace _18Ghosts
 
         public int GetGhostFromDungeon(int cp)
         {
-            Console.WriteLine("jogador a jogar " + players[cp].PlayerNum);
             for (int i = 0; i < dungeon.Length; i++)
             {
                 if (dungeon[i].Owner == players[cp].PlayerNum)
@@ -423,10 +422,10 @@ namespace _18Ghosts
             do
             {
                 Console.WriteLine("Select Line Number");
-                n3 = Convert.ToInt32(Console.ReadLine()) -1;
+                n3 = Convert.ToInt32(Console.ReadLine()) - 1;
                 Console.WriteLine("Select Colum Number");
-                n4 = Convert.ToInt32(Console.ReadLine()) -1;
-                Console.WriteLine("tipo = {0}" , board[n3, n4].Type);
+                n4 = Convert.ToInt32(Console.ReadLine()) - 1;
+                Console.WriteLine("tipo = {0}", board[n3, n4].Type);
                 if (board[n3, n4].Type != Types.Mirror)
                 {
                     Console.WriteLine("That is not a Mirror, try again");
@@ -444,6 +443,7 @@ namespace _18Ghosts
                         board[n3, n4].Bkgd = board[n1, n2].Bkgd;
                         board[n3, n4].Color = board[n1, n2].Color;
                         board[n3, n4].Owner = board[n1, n2].Owner;
+                        board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
                     }
 
                 }
@@ -469,16 +469,21 @@ namespace _18Ghosts
                 {
                     if (portals[pNum].CheckEntrance(pNum, n1, n2) == true)
                     {
+                        
                         Console.WriteLine("A Ghost from player {0} " +
                         "went through a portal!", board[n1, n2].Owner);
                         players[curPl].GhostsOut += 1;
-                        if (players[curPl].GhostsOut >= 3)
+                        Console.WriteLine("num de fantasmas " + players[curPl].GhostsOut );
+                        if (players[curPl].GhostsOut == 3)
                         {
                             victory = true;     // call Vitory!                            
                         }
                     }
                 }
             }
+            board[n1, n2].Owner = -1;
+            board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
+            
         }
 
         /// <summary>
@@ -570,11 +575,11 @@ namespace _18Ghosts
                 board[n3, n4].Type = board[n1, n2].Type;
                 board[n3, n4].Owner = board[n1, n2].Owner;
             }
-            // board[n3, n4].WriteTile();
-            // board[n1, n2].WriteTile();
             board[n1, n2].Owner = -1;
             board[n1, n2].Bkgd = board[n1, n2].DefaultBkgd;
-            board[n1, n2].Color = board[n1, n2].DfaultColor;
+            Console.WriteLine(" o dono é " + board[n1, n2].Owner);
+            Console.WriteLine(" o bkgd é " + board[n1, n2].Bkgd);
+            Console.WriteLine(" a cor é " + board[n1, n2].Color);
 
         }
 
@@ -589,9 +594,10 @@ namespace _18Ghosts
         public bool validInput(int n1, int n2, int n3, int n4)
         {
             bool ok = false;
+
             if (n3 < 0 || n4 < 0)
             {
-                return ok;
+                return false;
             }
             if (board[n3, n4].Owner == -1)
             {
@@ -604,22 +610,28 @@ namespace _18Ghosts
                 return ok;
             }
 
-            if (Math.Abs(n1 - n3) == 0)
+
+            if ((Math.Abs(n1 - n3) == 0) || (Math.Abs(n1 - n3) == 1))
             {
                 ok = true;
             }
-            else if (Math.Abs(n1 - n3) == 1)
+            else
             {
-                ok = true;
+                Console.WriteLine("You cannot move {0} lines",
+                Math.Abs(n1 - n3));
+                return false;
             }
 
-            if (Math.Abs(n2 - n4) == 0)
+            if ((Math.Abs(n2 - n4) == 0) || (Math.Abs(n2 - n4) == 1))
             {
                 ok = true;
             }
-            else if (Math.Abs(n2 - n4) == 1)
+            else
             {
-                ok = true;
+                Console.WriteLine("You cannot move {0} columns",
+                Math.Abs(n2 - n4));
+
+                return false;
             }
 
             return ok;
